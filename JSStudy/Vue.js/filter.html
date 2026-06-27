@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Vue 测试</title>
+<script src="./vue.min.js"></script>
+</head>
+<body>
+<div id="app">
+  数字1：{{ num1 | toInt }}</br>
+  数字2：{{ num2 | toInt }}</br>
+  数字3：{{ num3 | toInt }}</br>
+</div>
+
+<script>
+let vm = new Vue({
+  el: '#app',
+  data: {
+    num1: 11.22,
+	num2: 22.33,
+	num3: 12.12
+  },
+  filters:{
+    toInt(value){
+	  return parseInt(value);
+	}
+  }
+})
+</script>
+</body>
+</html>

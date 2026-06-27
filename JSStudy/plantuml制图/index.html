@@ -1,0 +1,42 @@
+<html>
+<head>
+<meta charset="utf-8">
+<script type="text/javascript" src="./plantuml/jquery.js"></script>
+<script type="text/javascript" src="./plantuml/rawdeflate.js"></script>
+<script type="text/javascript" src="./plantuml/jquery_plantuml.js"></script>
+<!-- rawdeflate.js is implicity used by jquery_plantuml.js -->
+<style>
+p,body{
+    text-align:center;
+}
+button{
+    width:500px;
+	height:50px;
+}
+</style>
+</head>
+
+<body>
+	<p>PlantUML 绘制</p>
+	<hr>
+	<textarea name="" id="umlcode" cols="100" rows="20"></textarea>
+	</br></br>
+	<button id="draw">绘制</button>
+	</br></br><hr>
+	<img uml="">
+	<hr>
+	
+    <script language="javascript">
+	$(document).ready(function(){
+	    $("#umlcode").text("Bob->Alice : foo\nBob<--Alice : foo");
+		
+	    $("#draw").click(function(){
+			var data = deflate(unescape(encodeURIComponent($("#umlcode").val())));
+			$("img").attr("src", "http://www.plantuml.com/plantuml/img/"+encode64(data));
+			
+		});
+	});
+	</script>
+</body>
+
+</html> 

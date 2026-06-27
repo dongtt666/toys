@@ -1,0 +1,118 @@
+
+<!-- HTML5 -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TouchEvent测试</title>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <h2>TouchEvent测试</h2>
+        <br />
+       
+        <div id="result" style="border:2px solid red; color:red;">未触发事件！</div>
+        <div id="test" style="border:2px solid red">
+            
+        </div>
+        
+        <script type="text/javascript">
+            //全局变量，触摸开始位置
+			var mindis = 100;
+            var startX = 0, startY = 0, direction = "";
+            
+            //touchstart事件
+            function touchSatrtFunc(evt) {
+                try
+                {
+                    evt.preventDefault(); //阻止触摸时浏览器的缩放、滚动条滚动等
+                    var touch = evt.touches[0]; //获取第一个触点
+                    var x = Number(touch.pageX); //页面触点X坐标
+                    var y = Number(touch.pageY); //页面触点Y坐标
+                    //记录触点初始位置
+                    startX = x;
+                    startY = y;
+                }
+                catch (e) {
+                    alert('touchSatrtFunc：' + e.message);
+                }
+            }
+
+            //touchmove事件，这个事件无法获取坐标
+            function touchMoveFunc(evt) {
+                try
+                {
+                    evt.preventDefault(); //阻止触摸时浏览器的缩放、滚动条滚动等
+                    var touch = evt.touches[0]; //获取第一个触点
+                    var x = Number(touch.pageX); //页面触点X坐标
+                    var y = Number(touch.pageY); //页面触点Y坐标
+					//判断滑动方向
+					if (Math.abs((x - startX)) >= Math.abs((y - startY))) {
+					    if(x - startX >= mindis){
+						    direction = 'right'
+						}else if(x - startX <= -mindis){
+                            direction = 'left';
+						}else{
+						    direction = '无效';
+						}
+                    }else{
+					    if(y - startY >= mindis){
+						    direction = 'down'
+						}else if(y - startY <= -mindis){
+                            direction = 'up';
+						}else{
+						    direction = '无效';
+						}
+					}
+                }
+                catch (e) {
+                    alert('touchMoveFunc：' + e.message);
+                }
+            }
+
+            //touchend事件
+            function touchEndFunc(evt) {
+                try {
+                    //evt.preventDefault(); //阻止触摸时浏览器的缩放、滚动条滚动等
+                    document.getElementById("result").innerHTML = direction;
+					switch(direction){
+					case 'up':
+						break;
+					case 'down':
+						break;
+						break;
+					case 'left':
+						break;
+					case 'right':
+						break;
+					default:
+					    break;
+					}
+					//alert(direction);
+                }
+                catch (e) {
+                    alert('touchEndFunc：' + e.message);
+                }
+            }
+
+            //绑定事件
+            function bindEvent() {
+                document.addEventListener('touchstart', touchSatrtFunc, false);
+                document.addEventListener('touchmove', touchMoveFunc, false);
+                document.addEventListener('touchend', touchEndFunc, false);
+            }
+
+            //判断是否支持触摸事件
+            function isTouchDevice() {
+                try {
+                    document.createEvent("TouchEvent");
+                    bindEvent(); //绑定事件
+                }
+                catch (e) {
+                    alert("不支持TouchEvent事件！");
+                }
+            }
+
+            window.onload = isTouchDevice;
+    </script>
+    </body>
+</html>
